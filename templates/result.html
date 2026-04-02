@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <p>Name: {{name}}</p>
+    <p>Attendance Percentage: {{percentage}}</p>
+    <p>Course Type: {{course}}</p>
+    {% if percentage >= 85: %}
+    <p>Excellent attendance</p>
+        
+    {% elif percentage >= 75: %}
+    <p>Eligible for exam</p>
+
+    {% elif percentage >= 60: %}
+    <p>short attendance - approval required</p>
+
+    {% else: %}
+    <p style="color: red;">not eligible for exam</p>
+        {% endif %}
+
+    {% if course == "lab" %}
+    <p>Lab attendance is strictly monitored</p>
+        {% endif %}
+
+    {% if course == "final_year" %}
+    <p>Attendance is evaluated by supervisor</p>
+        {% endif %}
+
+    {% if percentage == 0 %}
+    <p>Invalid attendance value</p>
+        {% endif %}
+    
+
+    
+</body>
+</html>

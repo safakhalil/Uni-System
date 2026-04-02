@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="/result" method="POST">
+        <label>Name:</label>
+        <input type="text" name="name" placeholder="Enter your name" required>
+        <br><br>
+
+        <label>Percentage:</label>
+        <input type="number" name="percentage" placeholder="Attendance percentage">
+        <br><br>
+
+        <select name="course"required>
+            <option value="regular">Regular</option>
+            <option value="lab">Lab</option>
+            <option value="final_year">Final Year Project</option>
+        </select>
+        <br><br>
+
+        <button type="submit">Submit</button>
+
+    </form>
+</body>
+</html>
