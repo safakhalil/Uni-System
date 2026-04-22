@@ -1,29 +1,139 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Attendance Form</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='home.css') }}">
+
 </head>
 <body>
+
+<!-- Background scene -->
+<div class="bg-scene">
+  <div class="sun-ray"></div>
+  <div class="beam"></div>
+  <div class="beam"></div>
+  <div class="beam"></div>
+  <div class="beam"></div>
+  <div class="window-frame"></div>
+  <div class="floor"></div>
+
+  <!-- Dust particles -->
+  <div class="dust" style="width:4px;height:4px;left:75%;animation-duration:8s;animation-delay:0s;"></div>
+  <div class="dust" style="width:3px;height:3px;left:80%;animation-duration:11s;animation-delay:2s;"></div>
+  <div class="dust" style="width:5px;height:5px;left:70%;animation-duration:9s;animation-delay:4s;"></div>
+  <div class="dust" style="width:2px;height:2px;left:85%;animation-duration:13s;animation-delay:1s;"></div>
+  <div class="dust" style="width:4px;height:4px;left:65%;animation-duration:10s;animation-delay:3s;"></div>
+</div>
+
+<!-- Isometric tablet scene -->
+<div class="iso-scene">
+  <div class="pencil-wrap">
+    <div class="pencil-eraser"></div>
+    <div class="pencil-body">
+      <div class="pencil-stripe"></div>
+    </div>
+    <div class="pencil-tip-wrap"></div>
+    <div class="pencil-shadow"></div>
+  </div>
+
+  <div class="tablet-iso">
+    <div class="tablet-face">
+      <div style="position:relative;">
+        <div class="tablet-screen-line"></div>
+        <div class="tablet-check"></div>
+      </div>
+      <div style="position:relative;">
+        <div class="tablet-screen-line"></div>
+        <div class="tablet-check" style="top:0;"></div>
+      </div>
+      <div style="position:relative;">
+        <div class="tablet-screen-line"></div>
+        <div class="tablet-check" style="top:0;"></div>
+      </div>
+      <div style="position:relative;">
+        <div class="tablet-screen-line"></div>
+        <div class="tablet-check" style="top:0;"></div>
+      </div>
+      <div class="tablet-screen-line" style="margin-top:10px;height:6px;width:60%;background:#e8e0f8;"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Floating info badges -->
+<div class="float-el float-el-1">
+  <div class="dot" style="background:#a8f0c8;"></div>
+  Present: 28
+</div>
+<div class="float-el float-el-2">
+  <div class="dot" style="background:#f8a8c8;"></div>
+  Absent: 4
+</div>
+
+<!-- MAIN FORM -->
+<div class="form-container">
+  <div class="form-card">
+    <div class="form-header">
+      <div class="form-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#5b47b0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/>
+        </svg>
+      </div>
+      <div>
+        <div class="form-title">Attendance Register</div>
+        <div class="form-subtitle">Mark your daily presence</div>
+      </div>
+    </div>
+
+    <div class="badge-row">
+      <span class="badge badge-purple">Spring 2025</span>
+      <span class="badge badge-teal">Live</span>
+      <span class="badge badge-pink">Required</span>
+    </div>
+
     <form action="/result" method="POST">
-        <label>Name:</label>
-        <input type="text" name="name" placeholder="Enter your name" required>
-        <br><br>
 
-        <label>Percentage:</label>
-        <input type="number" name="percentage" placeholder="Attendance percentage">
-        <br><br>
+      <div class="form-group">
+        <label for="name">Student Name</label>
+        <input type="text" id="name" name="name" placeholder="Enter your full name" required>
+      </div>
 
-        <select name="course"required>
-            <option value="regular">Regular</option>
-            <option value="lab">Lab</option>
-            <option value="final_year">Final Year Project</option>
-        </select>
-        <br><br>
+      <div class="input-row">
+        <div class="form-group" style="margin-bottom:0;">
+          <label for="percentage">Attendance %</label>
+          <input type="number" id="percentage" name="percentage" placeholder="e.g. 85" min="0" max="100">
+        </div>
+        <div class="form-group" style="margin-bottom:0;">
+          <label for="course">Course Type</label>
+          <div class="select-wrap">
+            <select id="course" name="course" required>
+              <option value="regular">Regular</option>
+              <option value="lab">Lab</option>
+              <option value="final_year">Final Year Project</option>
+            </select>
+          </div>
+        </div>
+      </div>
 
-        <button type="submit">Submit</button>
+      <div class="divider"></div>
+
+      <button type="submit" class="submit-btn">
+        <span>
+          Submit Attendance
+          <div class="btn-arrow">
+            <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+              <path d="M2 5h6M5 2l3 3-3 3" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+        </span>
+      </button>
 
     </form>
+
+    <div class="form-footer">Secured &amp; encrypted &nbsp;·&nbsp; Session active</div>
+  </div>
+</div>
+
 </body>
 </html>

@@ -1,40 +1,172 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Attendance Result</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='result.css') }}">
 </head>
 <body>
-    <p>Name: {{name}}</p>
-    <p>Attendance Percentage: {{percentage}}</p>
-    <p>Course Type: {{course}}</p>
-    {% if percentage >= 85: %}
-    <p>Excellent attendance</p>
-        
-    {% elif percentage >= 75: %}
-    <p>Eligible for exam</p>
 
-    {% elif percentage >= 60: %}
-    <p>short attendance - approval required</p>
+<div class="bg-scene">
+  <div class="sun-ray"></div>
+  <div class="beam b1"></div>
+  <div class="beam b2"></div>
+  <div class="beam b3"></div>
+  <div class="window-frame"></div>
+  <div class="floor"></div>
+  <div class="dust" style="width:4px;height:4px;left:72%;animation-duration:9s;animation-delay:0s;"></div>
+  <div class="dust" style="width:3px;height:3px;left:78%;animation-duration:12s;animation-delay:2s;"></div>
+  <div class="dust" style="width:5px;height:5px;left:68%;animation-duration:10s;animation-delay:4s;"></div>
+</div>
 
-    {% else: %}
-    <p style="color: red;">not eligible for exam</p>
-        {% endif %}
+<div class="result-wrap">
+  <div class="result-card">
 
-    {% if course == "lab" %}
-    <p>Lab attendance is strictly monitored</p>
-        {% endif %}
+    <a class="back-link" href="/">
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+        <path d="M7.5 2.5L4.5 6l3 3.5" stroke="#7a6da8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      Back to form
+    </a>
 
-    {% if course == "final_year" %}
-    <p>Attendance is evaluated by supervisor</p>
-        {% endif %}
+    <div class="result-header">
+      <div class="result-avatar" style="background: linear-gradient(135deg,#9b87e8,#6ec6e0);">
+        {{ name[0].upper() }}
+      </div>
+      <div>
+        <div class="result-name">{{ name }}</div>
+        <div class="result-sub">
+          {% if course == "regular" %}Regular course
+          {% elif course == "lab" %}Lab course
+          {% elif course == "final_year" %}Final year project
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    <div class="info-grid">
+      <div class="info-tile">
+        <div class="info-tile-label">Attendance</div>
+        <div class="info-tile-value">{{ percentage }}%</div>
+      </div>
+      <div class="info-tile">
+        <div class="info-tile-label">Status</div>
+        <div class="info-tile-text">
+          {% if percentage == 0 %}Invalid
+          {% elif percentage >= 85 %}Excellent
+          {% elif percentage >= 75 %}Eligible
+          {% elif percentage >= 60 %}Approval needed
+          {% else %}Not eligible
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    <div class="progress-wrap">
+      <div class="progress-label">
+        <span>0%</span>
+        <span>Threshold: 75%</span>
+        <span>100%</span>
+      </div>
+      <div class="progress-bar-bg">
+        <div class="progress-bar-fill" id="prog-fill" style="width: {{ percentage }}%;
+          background:
+            {% if percentage >= 85 %}#1d9e75
+            {% elif percentage >= 75 %}#378add
+            {% elif percentage >= 60 %}#ef9f27
+            {% elif percentage == 0 %}#b4b2a9
+            {% else %}#e24b4a
+            {% endif %};
+        "></div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
 
     {% if percentage == 0 %}
-    <p>Invalid attendance value</p>
-        {% endif %}
-    
+    <div class="status-banner status-invalid">
+      <div class="status-icon">
+        <svg viewBox="0 0 18 18" fill="none" stroke="#5f5e5a" stroke-width="1.8" stroke-linecap="round"><circle cx="9" cy="9" r="7"/><line x1="9" y1="5" x2="9" y2="10"/><circle cx="9" cy="13" r=".8" fill="#5f5e5a" stroke="none"/></svg>
+      </div>
+      <div>
+        <div class="status-msg">Invalid attendance value</div>
+        <div class="status-desc">Please re-submit with a valid percentage.</div>
+      </div>
+    </div>
 
-    
+    {% elif percentage >= 85 %}
+    <div class="status-banner status-excellent">
+      <div class="status-icon">
+        <svg viewBox="0 0 18 18" fill="none" stroke="#085041" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l4 4 8-8"/></svg>
+      </div>
+      <div>
+        <div class="status-msg">Excellent attendance</div>
+        <div class="status-desc">Outstanding — keep it up!</div>
+      </div>
+    </div>
+
+    {% elif percentage >= 75 %}
+    <div class="status-banner status-eligible">
+      <div class="status-icon">
+        <svg viewBox="0 0 18 18" fill="none" stroke="#0c447c" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l4 4 8-8"/></svg>
+      </div>
+      <div>
+        <div class="status-msg">Eligible for exam</div>
+        <div class="status-desc">You meet the minimum requirement.</div>
+      </div>
+    </div>
+
+    {% elif percentage >= 60 %}
+    <div class="status-banner status-warning">
+      <div class="status-icon">
+        <svg viewBox="0 0 18 18" fill="none" stroke="#633806" stroke-width="1.8" stroke-linecap="round"><path d="M9 3l7 12H2L9 3z"/><line x1="9" y1="8" x2="9" y2="11"/><circle cx="9" cy="13.5" r=".7" fill="#633806" stroke="none"/></svg>
+      </div>
+      <div>
+        <div class="status-msg">Short attendance — approval required</div>
+        <div class="status-desc">Contact your department for condonation.</div>
+      </div>
+    </div>
+
+    {% else %}
+    <div class="status-banner status-danger">
+      <div class="status-icon">
+        <svg viewBox="0 0 18 18" fill="none" stroke="#791f1f" stroke-width="1.8" stroke-linecap="round"><circle cx="9" cy="9" r="7"/><line x1="6" y1="6" x2="12" y2="12"/><line x1="12" y1="6" x2="6" y2="12"/></svg>
+      </div>
+      <div>
+        <div class="status-msg">Not eligible for exam</div>
+        <div class="status-desc">Attendance below minimum. Consult your advisor.</div>
+      </div>
+    </div>
+    {% endif %}
+
+    <div class="notes-wrap">
+      {% if course == "lab" %}
+      <span class="note-tag tag-purple">
+        <svg viewBox="0 0 12 12" fill="none" stroke="#3c3489" stroke-width="1.4" stroke-linecap="round"><path d="M4 1v4L1 10h10L8 5V1"/><line x1="4" y1="1" x2="8" y2="1"/></svg>
+        Lab attendance is strictly monitored
+      </span>
+      {% endif %}
+
+      {% if course == "final_year" %}
+      <span class="note-tag tag-teal">
+        <svg viewBox="0 0 12 12" fill="none" stroke="#085041" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="1" width="10" height="10" rx="2"/><path d="M4 6l2 2 2-2"/></svg>
+        Attendance evaluated by supervisor
+      </span>
+      {% endif %}
+    </div>
+
+    <a class="btn-back" href="/">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" style="position:relative;z-index:1;">
+        <path d="M9 3L5 7l4 4" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span style="position:relative;z-index:1;">Submit another</span>
+    </a>
+
+    <div class="footer-note">Record for {{ name }}</div>
+
+  </div>
+</div>
+
 </body>
 </html>
